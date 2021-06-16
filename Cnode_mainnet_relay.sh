@@ -14,6 +14,7 @@ echo "checking for updates/upgrades for your system"
 
 #1. update/upgrade system
 sudo apt update && sudo apt upgrade -y
+
 echo ""
 echo ""
 sleep 5
@@ -30,11 +31,12 @@ echo "Installing Cabal..."
 sudo ln -s /usr/local/lib/libsodium.so.23.3.0 /usr/lib/libsodium.so.23
 echo ""
 echo ""
+echo "Installing Libsodium..." 
 sleep 5
-echo "Installing the required libraries..." 
 
 
-# install Libsodium
+
+#install Libsodium
 mkdir $HOME/git
 cd $HOME/git
 git clone https://github.com/input-output-hk/libsodium
@@ -47,17 +49,23 @@ sudo make install
 
 echo ""
 echo ""
+echo "Installing the required libraries..." 
 sleep 5
 
 
-# Install Cabal and dependencies
+#Install Cabal and dependencies
 sudo apt-get -y install pkg-config libgmp-dev libssl-dev libtinfo-dev libsystemd-dev zlib1g-dev build-essential curl libgmp-dev libffi-dev libncurses-dev libtinfo5
 
-
+#getting ghc files
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 
+echo ""
+echo ""
+echo "Answer no to installing haskell-language HLS and Y to everything else..."
+sleep 5
 
-#4. Answer no to installing haskell-language HLS
+
+# Answer no to installing haskell-language HLS
 cd $HOME
 source .bashrc
 ghcup upgrade
@@ -72,7 +80,7 @@ ghcup install ghc 8.10.4
 ghcup set ghc 8.10.4
 
 
-#4. verifying the system can find the cabal bin file and making sure the system knows where to look.  adding to user profile file (.bashrc), reloading it using the source command and checking if it is loaded.
+#verifying the system can find the cabal bin file and making sure the system knows where to look.  adding to user profile file (.bashrc), reloading it using the source command and checking if it is loaded.
 echo PATH="$HOME/.local/bin:$PATH" >> $HOME/.bashrc
 echo export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH" >> $HOME/.bashrc
 echo export NODE_HOME=$HOME/cardano-my-node >> $HOME/.bashrc
@@ -81,7 +89,7 @@ echo export NODE_BUILD_NUM=$(curl https://hydra.iohk.io/job/Cardano/iohk-nix/car
 source $HOME/.bashrc
 
 
-#5. checing if we have installed the latest cabal package and ghc
+#checking if we have installed the latest cabal package and ghc
 
 cabal update
 cabal --version
@@ -241,4 +249,3 @@ sed -i env \
 #starting gliveView
 cd cardano-my-node/
 ./gLiveView.sh -b master
-
