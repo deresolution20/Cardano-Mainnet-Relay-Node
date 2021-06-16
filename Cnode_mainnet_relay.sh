@@ -12,7 +12,7 @@ echo "__________________________________________________________________________
 
 echo "checking for updates/upgrades for your system"
 
-#1. update/upgrade system
+#update/upgrade system
 sudo apt update && sudo apt upgrade -y
 
 echo ""
